@@ -73,7 +73,7 @@ export const login = async (req, res) => {
     }) 
     return res.status(200).json({message:"Logout successfully"})
   } catch (error) {
-console.log("error in the logout sectino",error )
+console.log("error in the logout section",error )
 return res.status(500).json({message:"Internat serve error"})
   }
  }
