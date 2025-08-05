@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import Messages from './Messages'
-import useGetMessages from '../../Context/useGetMessages'
+import useGetMessages from '../../Context/UseGetMessages'
 import Loading from '../../Component/Loading'
 import NewMessagesContext from '../../Context/NewMessagesContext'
 
