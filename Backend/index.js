@@ -7,30 +7,48 @@ import route from "./Router/userRouter.js";
 import messageRoute from "./Router/messageRoute.js";
 import { app, httpServer } from "./SocketIo/SocketIo.js";
 
+dotenv.config();
 
-dotenv.config()
-app.use(cookieParser())
+app.use(cookieParser());
+
+const allOrigin = [
+  'http://localhost:5173',
+  'https://live-chat-app-bay.vercel.app'
+];
+
 app.use(cors({
-   origin:'http://localhost:5173',
-   credentials:true
-}))
-app.use(express.json())
- const PORT= process.env.PORT || 4002
+  origin: function(origin, callback) {
+    if (!origin || allOrigin.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not Allow CORS'));
+    }
+  }
+}));
 
- const MONGODB_URL= process.env.MONGODB_URL 
- try {
- mongoose.connect(MONGODB_URL);
-    console.log("Database connect successful")
- } catch (error) {
-    console.log(error)
- }
+app.use(express.json());
 
- app.use("/api/user",route)
- app.use('/api/message',messageRoute )
- app.get("/" , (req ,res)=>{
-res.send("welcome in nodemon data")
- })
- 
- httpServer.listen(PORT, ()=>{
-  console.log(  ` The server  start one the ${PORT}`);
- })
+const PORT = process.env.PORT || 4002;
+const MONGODB_URL = process.env.MONGODB_URL;
+
+const startServer = async () => {
+  try {
+    await mongoose.connect(MONGODB_URL);
+    console.log("Database connect successful");
+
+    app.use("/api/user", route);
+    app.use('/api/message', messageRoute);
+
+    app.get("/", (req, res) => {
+      res.send("welcome in nodemon data");
+    });
+
+    httpServer.listen(PORT, () => {
+      console.log(`The server started on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Database connection error:", error);
+  }
+};
+
+startServer();
