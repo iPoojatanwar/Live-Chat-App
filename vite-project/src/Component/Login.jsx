@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,14 +7,14 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
   const { register, formState: { errors }, handleSubmit } = useForm();
-
+const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
   const onSubmit = (data) => {
     const userInfo = {
       email: data.email,
       password: data.password,
     };
 
-    axios.post('/api/user/login', userInfo)
+    axios.post(`${API_BASE_URL}/api/user/login`, userInfo)
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("Chatapp", JSON.stringify(response.data));

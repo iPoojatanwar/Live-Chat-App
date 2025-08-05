@@ -6,10 +6,10 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const Logout = () => {
   const [loading, setLoading] = useState(false); 
-
+const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
   const handleLogOut = () => {
   setLoading(true); 
-  axios.post('http://localhost:4000/api/user/logout')
+  axios.post(`${API_BASE_URL}/api/user/logout`)
     .then((response) => {
       console.log("Logout successful:", response.data);
       localStorage.removeItem("Chatapp");

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const Sinup = () => {
   const [userAuth, setUserAuth] = useAuth();
   const { register, formState: { errors }, handleSubmit } = useForm();
-
+const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
   const onSubmit = (data) => {
     const userInfo = {
       fullname: data.fullname,
@@ -17,7 +17,7 @@ const Sinup = () => {
       confirmpassword: data.confirmpassword,
     };
 
-    axios.post("/api/user/signup", userInfo, { withCredentials: true })
+    axios.post(`${API_BASE_URL}/api/user/signup`, userInfo, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("Chatapp", JSON.stringify(response.data));
