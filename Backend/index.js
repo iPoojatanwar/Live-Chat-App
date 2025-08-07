@@ -29,7 +29,7 @@ app.use(cors({
 
 app.use(express.json());
 
-const PORT = process.env.PORT || 4002;
+const PORT = process.env.PORT || 4000;
 const MONGODB_URL = process.env.MONGODB_URL;
 
 const startServer = async () => {
